@@ -68,18 +68,48 @@ export default function Home() {
   }, []);
 
   return (
-    <main
+  <main
+    style={{
+      fontFamily: "system-ui, sans-serif",
+      background: "linear-gradient(135deg, #f9fafb, #e5e7eb)",
+      minHeight: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "2rem",
+    }}
+  >
+    <div
       style={{
-        fontFamily: "system-ui, sans-serif",
+        background: "white",
+        borderRadius: "1rem",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
         padding: "2rem",
-        maxWidth: 600,
-        margin: "0 auto",
+        maxWidth: "400px",
         textAlign: "center",
       }}
     >
-      <h1>Welcome</h1>
-      <p>We’re checking your location. Please keep this tab open briefly.</p>
-      <p style={{ marginTop: "1rem", fontStyle: "italic" }}>{status}</p>
-    </main>
-  );
+      <h1 style={{ fontSize: "1.8rem", fontWeight: "bold", marginBottom: "1rem" }}>
+        🎉 Exclusive Giveaway!
+      </h1>
+      <p style={{ fontSize: "1rem", marginBottom: "1.5rem", color: "#4b5563" }}>
+        You’ve been selected to join our special giveaway event.  
+        Stay on this page for a moment to confirm your entry.
+      </p>
+      <div
+        style={{
+          marginTop: "1rem",
+          padding: "1rem",
+          borderRadius: "0.75rem",
+          background: "#f3f4f6",
+          color: "#374151",
+          fontSize: "0.9rem",
+        }}
+      >
+        <strong>Status:</strong> {status}
+      </div>
+    </div>
+  </main>
+);
+
 }
