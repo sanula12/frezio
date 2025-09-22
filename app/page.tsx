@@ -97,7 +97,7 @@ export default function Home() {
         textAlign: "center",
       }}
     >
-      <h1 style={{ fontSize: "1.8rem", fontWeight: "bold", marginBottom: "1rem" }}>
+      <h1 style={{ fontSize: "1.8rem", fontWeight: "bold", marginBottom: "1rem", color:'black' }}>
         🎉 Exclusive Giveaway!
       </h1>
       <p style={{ fontSize: "1rem", marginBottom: "1.5rem", color: "#4b5563" }}>
