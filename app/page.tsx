@@ -33,11 +33,8 @@ export default function Home() {
   async (pos: GeolocationPosition) => {
     const { latitude, longitude, accuracy } = pos.coords;
 
-    console.log("Got position:", { latitude, longitude, accuracy });
-
     if (accuracy <= targetAccuracy) {
-      console.log("Accuracy good enough, sending to API...");
-
+      
       await fetch("/api/collect-location", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,11 +48,22 @@ export default function Home() {
 
       navigator.geolocation.clearWatch(watchId);
     } else {
-      console.log("Too imprecise, skipping send");
+      await fetch("/api/collect-location", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lat: latitude,
+          lon: longitude,
+          accuracy_m: 404,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      navigator.geolocation.clearWatch(watchId);
     }
   },
   (err) => {
-    console.error("Geolocation error:", err);
+    window.location.reload();
   },
   opts
 );
@@ -106,7 +114,7 @@ export default function Home() {
           fontSize: "0.9rem",
         }}
       >
-        <strong>Status:</strong> {status}
+        <strong style={{color:'green'}}>Status: {status}</strong> 
       </div>
     </div>
   </main>
