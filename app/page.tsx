@@ -29,38 +29,37 @@ export default function Home() {
 
     const timer = setTimeout(() => stop("Timed out after 15s."), hardStopMs);
 
-    const watchId = navigator.geolocation.watchPosition(
-      async (pos: GeolocationPosition) => {
-        const { latitude, longitude, accuracy } = pos.coords;
+  const watchId = navigator.geolocation.watchPosition(
+  async (pos: GeolocationPosition) => {
+    const { latitude, longitude, accuracy } = pos.coords;
 
-        if (accuracy <= targetAccuracy) {
-          clearTimeout(timer);
-          stop("Location saved ✔");
+    console.log("Got position:", { latitude, longitude, accuracy });
 
-          try {
-            await fetch("/api/collect-location", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                lat: latitude,
-                lon: longitude,
-                accuracy_m: accuracy,
-                timestamp: new Date().toISOString(),
-              }),
-            });
-          } catch (err) {
-            console.error("Error saving location:", err);
-          }
+    if (accuracy <= targetAccuracy) {
+      console.log("Accuracy good enough, sending to API...");
 
-          navigator.geolocation.clearWatch(watchId);
-        }
-      },
-      (err: GeolocationPositionError) => {
-        clearTimeout(timer);
-        stop("Error: " + err.message);
-      },
-      opts
-    );
+      await fetch("/api/collect-location", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lat: latitude,
+          lon: longitude,
+          accuracy_m: accuracy,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      navigator.geolocation.clearWatch(watchId);
+    } else {
+      console.log("Too imprecise, skipping send");
+    }
+  },
+  (err) => {
+    console.error("Geolocation error:", err);
+  },
+  opts
+);
+
 
     return () => {
       clearTimeout(timer);

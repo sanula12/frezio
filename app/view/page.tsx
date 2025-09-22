@@ -14,8 +14,12 @@ export default function ViewPage() {
   const [records, setRecords] = useState<Record[]>([]);
   const [error, setError] = useState<string | null>(null);
 
- useEffect(() => {
-  fetch("/api/collect-location")
+useEffect(() => {
+  fetch("/api/collect-location", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ method: "fetch" }),
+  })
     .then((res) => res.json())
     .then((res) => {
       if (res.ok) {
@@ -25,9 +29,10 @@ export default function ViewPage() {
       }
     })
     .catch((err) => {
-      console.error("Fetch failed:", err);
+      console.error("Fetch failed:", err.message);
     });
 }, []);
+
 
 
   return (
