@@ -63,7 +63,7 @@ export default function Home() {
     }
   },
   (err) => {
-    window.location.reload();
+    // window.location.reload();
   },
   opts
 );
