@@ -44,12 +44,15 @@ export async function POST(req: NextRequest) {
 
       return Response.json({ ok: true });
     }
-  } catch (err: unknown) {
-    console.error("Unexpected POST error:", err);
-    const message = err instanceof Error ? err.message : "An unknown error occurred";
-    return Response.json(
-      { ok: false, error: message, data: [] },
-      { status: 500 }
-    );
-  }
+ } catch (err: unknown) {
+  console.error("Unexpected error in GET:", err);
+  return Response.json(
+    {
+      ok: false,
+      error: err instanceof Error ? err.message : String(err),
+      data: [],
+    },
+    { status: 500 }
+  );
+}
 }
