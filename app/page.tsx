@@ -17,8 +17,8 @@ export default function Home() {
       timeout: 20000,
     };
 
-    const targetAccuracy = 5000; // meters
-    const hardStopMs = 15000; // 15s limit
+    const targetAccuracy = 5000; 
+    const hardStopMs = 15000; 
     let stopped = false;
 
     function stop(reason: string) {

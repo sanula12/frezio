@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { method, ...data } = body;
 
     if (method === "fetch") {
-      // 📥 Return all rows
+     
       const { data: rows, error } = await supabaseServer
         .from("locations")
         .select("*")
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
       return Response.json({ ok: true, data: rows ?? [] });
     } else {
-      // 📝 Save a new row
+      
       const ip =
         req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 
